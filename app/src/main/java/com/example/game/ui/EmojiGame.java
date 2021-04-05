@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EmojiGame {
-    private Game<String> game;
+    private final Game<String> game;
     public EmojiGame(){
         List<String> content = new ArrayList<>();
         content.add("\uD83D\uDE0D");
@@ -21,6 +21,9 @@ public class EmojiGame {
     }
     public List<Card<String>> getCards(){
         return game.getCards();
+    }
+    public boolean isGameOver(){
+        return game.isGameOver();
     }
 
 }

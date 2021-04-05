@@ -16,11 +16,10 @@ import com.example.game.R;
 import com.example.game.domain.Card;
 
 public class EmojiAdapter extends RecyclerView.Adapter<EmojiAdapter.ViewHolder> {
-    private EmojiGame game;
-    private listener listener;
-    private Context context;
+    private final EmojiGame game;
+    private final listener listener;
 
-    public EmojiAdapter(EmojiGame game, listener listener, Context context) {
+    public EmojiAdapter(EmojiGame game, listener listener) {
         this.game = game;
         this.listener = listener;
     }
@@ -29,7 +28,7 @@ public class EmojiAdapter extends RecyclerView.Adapter<EmojiAdapter.ViewHolder> 
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_item,parent,false);
-        return new ViewHolder(view,listener);
+        return new ViewHolder(view, listener);
     }
 
     @Override
@@ -42,7 +41,7 @@ public class EmojiAdapter extends RecyclerView.Adapter<EmojiAdapter.ViewHolder> 
         return game.getCards().size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         private final listener listener;
         private final TextView tv_card;
         public ViewHolder(@NonNull View itemView,listener listener) {
@@ -52,18 +51,7 @@ public class EmojiAdapter extends RecyclerView.Adapter<EmojiAdapter.ViewHolder> 
         }
 
         public void onBind(Card<String> card){
-            if (game.getCards().size() ==0){
-                Toast.makeText(context, "game over!", Toast.LENGTH_SHORT).show();
-//                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-//                builder.setMessage("Game is over");
-//                builder.show();
-            }
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    listener.cardClick(card);
-                }
-            });
+            itemView.setOnClickListener(v -> listener.cardClick(card));
             if (card.isFaceUp()){
                 tv_card.setBackgroundColor(Color.WHITE);
                 tv_card.setText(card.getContent());

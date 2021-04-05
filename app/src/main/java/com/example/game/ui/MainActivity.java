@@ -17,17 +17,16 @@ public class MainActivity extends AppCompatActivity implements EmojiAdapter.list
         setContentView(R.layout.activity_main);
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         emojiGame = new EmojiGame();
-        adapter = new EmojiAdapter(emojiGame,this,this);
+        adapter = new EmojiAdapter(emojiGame,this);
         recyclerView.setAdapter(adapter);
     }
 
     @Override
     public void cardClick(Card<String> card) {
         emojiGame.choose(card);
-        if (emojiGame.getCards().size() == 0){
-            androidx.appcompat.app.AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("Game is over");
-            builder.show();
+        if (emojiGame.isGameOver()){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Game Over").show();
         }
         adapter.notifyDataSetChanged();
     }

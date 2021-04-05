@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 public class Game<CardContent> {
-    private List<Card<CardContent>> cards = new ArrayList<>();
+    private final List<Card<CardContent>> cards = new ArrayList<>();
 
     public Game(List<CardContent> contents) {
         for (int i = 0; i <contents.size(); i++) {
@@ -27,21 +27,34 @@ public class Game<CardContent> {
             if (searchCard.isFaceUp()
                     && searchCard.getId()!=card.getId()){
                 if (searchCard.equals(card)){
-                    cards.remove(searchCard);
-                    cards.remove(card);
-                    Log.d("remove","remove successful");
+                    removeCards(searchCard,card);
                     return;
                 }else{
-                    searchCard.setFaceUp(!searchCard.isFaceUp());
-                    card.setFaceUp(!card.isFaceUp());
+                    performCardsFaceUp(searchCard,card);
                 }
             }
 
         }
     }
 
+    private void performCardsFaceUp(Card<CardContent> searchCard, Card<CardContent> card) {
+        searchCard.setFaceUp(!searchCard.isFaceUp());
+        card.setFaceUp(!card.isFaceUp());
+    }
+
+    private void removeCards(Card<CardContent> searchCard, Card<CardContent> card) {
+        cards.remove(searchCard);
+        cards.remove(card);
+    }
+
     public List<Card<CardContent>> getCards() {
         return cards;
+    }
+
+    public boolean isGameOver(){
+        if (cards.size()==0){
+            return true;
+        }else return false;
     }
 
 }
